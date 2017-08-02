@@ -1,0 +1,14 @@
+{
+    "database" : {
+        "host" : "localhost",
+        "port" : "3316",
+        "username" : "admin",
+        "password" : "admin",
+        "name" : "oauthserver"
+    },
+    "logger" : {
+        "consoleEnabled" : "true",
+        "level" : "debug",
+        "path" : "logs/debug.log"
+    }
+}
