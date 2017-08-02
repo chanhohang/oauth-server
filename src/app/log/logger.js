@@ -19,15 +19,24 @@ const consoleEnabled = config.logger.consoleEnabled;
 
 module.exports = {
     debug: function (...args) {
-        logger.debug(args);
+        const line = args.join();
+        logger.debug(line);
         if (consoleEnabled) {
-            console.log(args);
+            console.log(line);
         }
     },
     info: function (...args) {
-        logger.info(args);
+        const line = args.join();
+        logger.info(line);
         if (consoleEnabled) {
-            console.log(args);
+            console.log(line);
         }
+    },
+    error: function (...args) {
+        const line = args.join();
+        logger.error(line);
+        if (consoleEnabled) {
+            console.log(line);
+        }        
     }
 };

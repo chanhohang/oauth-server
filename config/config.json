@@ -1,7 +1,7 @@
 {
     "database" : {
         "host" : "localhost",
-        "port" : "3316",
+        "port" : "3306",
         "username" : "admin",
         "password" : "admin",
         "name" : "oauthserver"
