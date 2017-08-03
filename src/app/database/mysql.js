@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 var path = require('path');
 var config = require(path.resolve('') + '/config/config.json')
 
-var logger = require('../log/logger');
+var logger = require('../log/logger').getLogger('mysql');
 
 logger.info("create database connection with host:" + config.database.host, 'username:' + config.database.username, 'database:' + config.database.name);
 const connection = mysql.createConnection({

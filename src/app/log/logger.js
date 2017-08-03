@@ -18,6 +18,9 @@ const logger = log4js.getLogger();
 const consoleEnabled = config.logger.consoleEnabled;
 
 module.exports = {
+    getLogger: function(name) {
+      return log4js.getLogger(name);
+    },
     debug: function (...args) {
         const line = args.join();
         logger.debug(line);
