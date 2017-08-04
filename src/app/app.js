@@ -1,6 +1,5 @@
 'use strict';
 
-//const mysql = require('./database/mysql')
 const orm = require('./database/orm');
 const logger = require('./log/logger').getLogger('app')
 
@@ -12,7 +11,25 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-//mysql.connect();
+logger.info("###### Oauth Server Initilization ######");
+
+function exitHandler(options, err) {
+  if (options.cleanup) {
+    logger.info('clean');
+  }
+  if (err) {
+    logger.error(err);
+  }
+  if (options.exit) {
+    logger.info("Process terminated by Shutdown Signal!")
+    process.exit();
+  }
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null, { cleanup: true }));
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 function main() {
 

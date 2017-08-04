@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This file is obsolete as replaced by orm.js
+ */
 const mysql = require('mysql2');
 var path = require('path');
 var config = require(path.resolve('') + '/config/config.json')

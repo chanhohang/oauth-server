@@ -7,7 +7,12 @@ var log4js = require('log4js'); // include log4js
 
 log4js.configure({
   appenders: {
-    everything: { type: 'file', filename: config.logger.path }
+    everything: { 
+        type: 'dateFile', 
+        filename: config.logger.path,
+        pattern : '-yyyy-MM-dd.log',
+        alwaysIncludePattern : "true"
+    }
   },
   categories: {
     default: { appenders: [ 'everything' ], level: config.logger.level }
