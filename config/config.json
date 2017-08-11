@@ -11,5 +11,12 @@
         "consoleEnabled" : "true",
         "level" : "debug",
         "path" : "logs/debug.log"
+    },
+    "mailer" : {
+        "username" : "applicationuserhk@gmail.com",
+        "password" : "",
+        "host" : "smtp.gmail.com",
+        "port" : "465",
+        "secure" : true
     }
 }
