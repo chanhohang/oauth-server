@@ -1,6 +1,6 @@
 'use strict';
 
-var Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 class UserVo {
     constructor() {
@@ -44,4 +44,4 @@ UserVo.index = {
     ]
 }
 
-module.exports = UserVo;
+export default UserVo;

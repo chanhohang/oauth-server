@@ -1,63 +1,34 @@
 'use strict';
 
+require('import-export');
 const orm = require('./database/orm');
 const logger = require('./log/logger').getLogger('app');
 const mailer = require('./mail/mailer');
-
-const express = require('express')
-var browserify = require('browserify');
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-var DOMFactories = require('react-dom-factories');
-var jsx = require('node-jsx')
-
-const app = express()
-
-// Make jsx files requirable.
-jsx.install();
-
-var Books = require('../views/index.jsx');
-
-app.use(express.static('static'))
-
-app.get('/', function (req, res) {
-  var books = [{
-    title: 'Professional Node.js',
-    read: false
-  }, {
-    title: 'Node.js Patterns',
-    read: false
-  }];
-
-  res.setHeader('Content-Type', 'text/html');
-  res.send(ReactDOMServer.renderToStaticMarkup(
-    DOMFactories.body(
-      null,
-      DOMFactories.div({
-        id: 'app',
-        dangerouslySetInnerHTML: {
-          __html: ReactDOMServer.renderToString(React.createElement(Books, {
-            data: books
-          }))
-        }
-      }),
-      DOMFactories.script({
-        'id': 'initial-data',
-        'type': 'text/plain',
-        'data-json': JSON.stringify(books)
-      }),
-      DOMFactories.script({
-        src: '/static/bundle.js'
-      })
-    )
-  ));  
-});
-
-// app.get('/', function (req, res) {
-//   res.send('Hello World!')
-// })
+const express = require('express');
+const serverRoute = require('./core/serverRoute');
 
 
+// GUI
+const next = require('next');
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dir: './src/pages', dev });
+const handle = app.getRequestHandler();
+
+function nextjsServer() {
+  app.prepare().then(() => {
+    const server = express();
+
+    // Register Server Route here.
+    serverRoute(server);
+
+    server.get('*', (req, res) => {
+      handle(req, res)
+    })
+
+    server.listen(3000)
+  });
+
+};
 
 logger.info("###### Oauth Server Initilization ######");
 
@@ -97,9 +68,7 @@ function main() {
       }, this);
     });
 
-    app.listen(3000, function () {
-      logger.info('Example app listening on port 3000!');
-    })
+    nextjsServer();
   });
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-var UserVo = require('../entities/userVo')
-var Sequelize = require('sequelize');
+import UserVo from '../entities/userVo';
+import Sequelize from 'sequelize';
 
 class UserDao {
     constructor(sequelize) {
@@ -9,4 +9,4 @@ class UserDao {
     }
 }
 
-module.exports = UserDao;
+export default UserDao;

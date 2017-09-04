@@ -1,14 +1,13 @@
 'use strict';
 
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-var path = require('path');
-var config = require(path.resolve('') + '/config/config.json')
+import config from '../util/configLoader'
 
-var password = config.mailer.password;
-var username = config.mailer.username;
-var host = config.mailer.host;
-var port = config.mailer.port;
+let password = config.mailer.password;
+let username = config.mailer.username;
+let host = config.mailer.host;
+let port = config.mailer.port;
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
