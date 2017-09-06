@@ -11,7 +11,8 @@ const serverRoute = require('./core/serverRoute');
 // GUI
 const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dir: './src/pages', dev });
+// const app = next({ dir: './src/pages', dev });
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 function nextjsServer() {
