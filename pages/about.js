@@ -1,12 +1,11 @@
-'use strict';
+'use strict'
+
 import React from 'react'
 
-
-import Header from './components/Header'
+import Layout from '../components/MyLayout.js'
 
 export default () => (
-  <div>
-    <Header />
-    <p>This is the about page</p>
-  </div>
+    <Layout>
+       <p>This is the about page</p>
+    </Layout>
 )

@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import path from 'path';
+import path from 'path'
 
 var config = require(path.resolve('') + '/config/config.json')
 
-export default config;
+export default config

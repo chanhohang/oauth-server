@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-import log4js from 'log4js'; // include log4js
+import log4js from 'log4js' // include log4js
 import config from '../util/configLoader'
 
 log4js.configure({
@@ -15,38 +15,38 @@ log4js.configure({
     categories: {
         default: { appenders: ['everything'], level: config.logger.level }
     }
-});
+})
 
-const logger = log4js.getLogger();
-const consoleEnabled = config.logger.consoleEnabled;
+const logger = log4js.getLogger()
+const consoleEnabled = config.logger.consoleEnabled
 
 module.exports = {
     getLogger: function (name) {
-        return log4js.getLogger(name);
+        return log4js.getLogger(name)
     },
     debug: function (...args) {
-        const line = args.join();
-        logger.debug(line);
+        const line = args.join()
+        logger.debug(line)
         if (consoleEnabled) {
-            console.log(line);
+            console.log(line)
         }
     },
     info: function (...args) {
-        const line = args.join();
-        logger.info(line);
+        const line = args.join()
+        logger.info(line)
         if (consoleEnabled) {
-            console.log(line);
+            console.log(line)
         }
     },
     error: function (...args) {
-        const line = args.join();
-        logger.error(line);
+        const line = args.join()
+        logger.error(line)
         if (consoleEnabled) {
-            console.log(line);
+            console.log(line)
         }
     }
 };
 
 export function getLogger(name) {
-    return log4js.getLogger(name);
+    return log4js.getLogger(name)
 }

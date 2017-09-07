@@ -1,5 +1,5 @@
-import express from 'express';
-import orm from '../database/orm';
+import express from 'express'
+import orm from '../database/orm'
 
 export default function serverRouting(server) {
 
@@ -16,9 +16,16 @@ export default function serverRouting(server) {
         orm.getUserDao().findAll().then(function (users) {
             users.forEach(function (user) {
                 res.write(user.userId + "," + user.email);
-            }, this);
-            res.end();
-        });
+            }, this)
+            res.end()
+        })
     })
 
+    server.get('/api/tvshows', (req, res) => {
+        let shows = { shows: [{ show: { id: 'batman1', } }, { show: { id: "batman2" } }] }
+        let result = JSON.stringify(shows)
+        res.write(result)
+        console.log(result)
+        res.end()
+    })
 }

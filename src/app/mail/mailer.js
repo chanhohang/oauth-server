@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer'
 
 import config from '../util/configLoader'
 
-let password = config.mailer.password;
-let username = config.mailer.username;
-let host = config.mailer.host;
-let port = config.mailer.port;
+let password = config.mailer.password
+let username = config.mailer.username
+let host = config.mailer.host
+let port = config.mailer.port
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -18,7 +18,7 @@ let transporter = nodemailer.createTransport({
         user: username,
         pass: password
     }
-});
+})
 
 // setup email data with unicode symbols
 let mailOptions = {
@@ -27,14 +27,14 @@ let mailOptions = {
     subject: 'Hello ✔', // Subject line
     text: 'Hello world ?', // plain text body
     html: '<b>Hello world ?</b>' // html body
-};
+}
 
 // send mail with defined transport object
 if (password != '') {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            return console.log(error)
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-    });
+        console.log('Message %s sent: %s', info.messageId, info.response)
+    })
 }

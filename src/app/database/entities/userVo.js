@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
-import Sequelize from 'sequelize';
+import Sequelize from 'sequelize'
 
 class UserVo {
     constructor() {
-        this.userId = null;
-        this.firstName = null;
-        this.lastName = null;
-        this.password = null;
-        this.password_salt = null;
-        this.email = null;
+        this.userId = null
+        this.firstName = null
+        this.lastName = null
+        this.password = null
+        this.password_salt = null
+        this.email = null
     }
 
 }
 
-UserVo.tableName = 'user';
+UserVo.tableName = 'user'
 UserVo.schema = {
     userId: {
         type: Sequelize.BIGINT, autoIncrement: true, primaryKey: true
@@ -34,7 +34,7 @@ UserVo.schema = {
     email: {
         type: Sequelize.STRING, unique: true, allowNull: false
     }
-};
+}
 UserVo.index = {
     indexes: [
         {
@@ -44,4 +44,4 @@ UserVo.index = {
     ]
 }
 
-export default UserVo;
+export default UserVo
