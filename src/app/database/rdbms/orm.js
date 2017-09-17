@@ -1,8 +1,8 @@
 'use strict';
 
-import config from '../util/configLoader'
+import config from '../../util/configLoader'
 
-import { getLogger } from '../log/logger'
+import { getLogger } from '../../log/logger'
 let logger = getLogger('orm')
 
 import Sequelize from 'sequelize'

@@ -7,6 +7,9 @@
         "name" : "oauthserver",
         "mode" : "rebuild"
     },
+    "mongodb" : {
+        "url" : "mongodb://localhost:27017/oauth"
+    },
     "logger" : {
         "consoleEnabled" : "true",
         "level" : "debug",

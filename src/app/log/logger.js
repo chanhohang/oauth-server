@@ -44,6 +44,11 @@ module.exports = {
         if (consoleEnabled) {
             console.log(line)
         }
+    },
+    shutdown: function () {
+        log4js.shutdown(() => {
+            process.exit(1);
+        });
     }
 };
 

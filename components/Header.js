@@ -8,14 +8,18 @@ const linkStyle = {
 }
 
 const Header = () => (
-    <div>
-        <Link href="/">
-          <a style={linkStyle}>Home</a>
-        </Link>
-        <Link href="/about">
-          <a style={linkStyle}>About</a>
-        </Link>
-    </div>
+  <div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
+    <Link href="/">
+      <a style={linkStyle}>Home</a>
+    </Link>
+    <Link href="/about">
+      <a style={linkStyle}>About</a>
+    </Link>
+    <Link href="/login">
+      <a style={linkStyle}>Login</a>
+    </Link>
+  </div>
 )
 
 export default Header

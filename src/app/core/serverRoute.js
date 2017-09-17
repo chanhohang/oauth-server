@@ -1,5 +1,6 @@
 import express from 'express'
-import orm from '../database/orm'
+import orm from '../database/rdbms/orm'
+import LoginController from './controller/LoginController'
 
 export default function serverRouting(server) {
 
@@ -27,5 +28,9 @@ export default function serverRouting(server) {
         res.write(result)
         console.log(result)
         res.end()
+    })
+
+    server.post('/api/login', (req, res) =>{
+        LoginController.process(req,res)
     })
 }

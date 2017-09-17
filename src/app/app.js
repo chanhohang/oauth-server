@@ -1,23 +1,50 @@
 'use strict'
 
 require('import-export')
-const orm = require('./database/orm')
+
+const express = require('express')
+const bodyParser = require('body-parser');
+const multer = require('multer'); // v1.0.5
+const morgan = require('morgan')
+
+const orm = require('./database/rdbms/orm')
+const mongo = require('./database/mongodb/mongo')
 const logger = require('./log/logger').getLogger('app')
 const mailer = require('./mail/mailer')
-const express = require('express')
 const serverRoute = require('./core/serverRoute')
 const clientRoute = require('./core/clientRoute')
+const StringUtil = require('./util/stringUtil')
+const log4js = require('./log/logger')
+const MorganStream = require('./log/morganStream')
 
 // GUI
 const next = require('next')
+// Nextjs
 const dev = process.env.NODE_ENV !== 'production'
 // const app = next({ dir: './src/pages', dev })
 const app = next({ dev })
+
+
+
 const handle = app.getRequestHandler()
 
+let appStarted = false
 function nextjsServer() {
+  if (appStarted) {
+    logger.info('Server already started.')
+    return
+  }
+  appStarted = true;
   app.prepare().then(() => {
     const server = express()
+
+    // MiddleWare start
+    const upload = multer() // for parsing multipart/form-data
+    server.use(bodyParser.json()) // for parsing application/json
+    server.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+    const accessLogStream = new MorganStream()
+    server.use(morgan('combined', {stream: accessLogStream}))
+    // Middleware end
 
     // Register Server Route here.
     serverRoute(server)
@@ -29,7 +56,9 @@ function nextjsServer() {
       handle(req, res)
     })
 
-    server.listen(3000)
+    let port = 3000
+    server.listen(port)
+    logger.info('Server is listening on port:' + port)
   })
 
 }
@@ -41,18 +70,19 @@ function exitHandler(options, err) {
     logger.info('clean')
   }
   if (err) {
-    logger.error(err)
+    logger.fatal(err)
+    console.error(err)
   }
   if (options.exit) {
     logger.info("Process terminated by Shutdown Signal!")
-    process.exit()
+    log4js.shutdown() // Instead of Process.exit, we wait the logger to shutdown first.
   }
 }
 
 //do something when app is closing
 process.on('exit', exitHandler.bind(null, { cleanup: true }))
 process.on('SIGINT', exitHandler.bind(null, { exit: true }))
-process.on('uncaughtException', exitHandler.bind(null, { exit: true }))
+process.on('uncaughtException', err => exitHandler({ exit: true }, err))
 
 function main() {
 
@@ -77,3 +107,28 @@ function main() {
 }
 
 orm.connect(main)
+
+function mongoMain() {
+  nextjsServer()
+  try {
+    let UserModel = mongo.getUserModel();
+    const user = { userId: 'davidjones', lastName: 'random', email: 'davidjones@davidjones.com' }
+
+    UserModel.find({}, function (err, docs) {
+      if (err) logger.error(err)
+      logger.info(docs)
+    });
+
+    UserModel.findOneAndUpdate(
+      { userId: user.userId }, user, { upsert: true, setDefaultsOnInsert: true, new: true },
+      (err, user) => {
+        if (err) logger.error(err)
+        logger.info(user._id + ' is saved.' + user)
+      });
+  } catch (err) {
+    logger.error(err)
+  }
+}
+
+mongo.connect(mongoMain)
+
