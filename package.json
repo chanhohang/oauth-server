@@ -11,22 +11,22 @@
     "localtest": "cross-env NODE_ENV=test mocha --recursive test/helpers/initializeTests.js test/",
     "testwatchmocha": "cross-env NODE_ENV=test mocha test/helpers/initializeTests.js test/ --recursive --watch",
     "lint": "eslint src",
-    "test": "jest test/**",
+    "test": "jest --debug",
     "next": "next",
     "testwatch": "jest --watchAll test/**"
   },
   "author": "Ho Hang Chan",
   "dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
     "browserify": "^14.4.0",
     "crypto": "0.0.3",
     "es6-shim": "0.35.1",
+    "eslint": "^4.7.0",
     "express": "^4.15.3",
     "import-export": "^1.0.1",
     "isomorphic-unfetch": "^2.0.0",
     "log4js": "^2.3.2",
+    "mongodb": "^2.2.31",
     "mysql2": "^1.3.6",
     "next": "^3.2.1",
     "node-jsx": "^0.13.3",
@@ -39,6 +39,24 @@
     "react-markdown": "^2.5.0",
     "reactify": "^1.1.1",
     "sequelize": "^4.4.2",
-    "styled-jsx": "^1.0.10"
+    "styled-jsx": "^1.0.10",
+    "transform-runtime": "0.0.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^21.0.2",
+    "babel-preset-es2015": "^6.24.1",    
+    "babel-preset-react": "^6.24.1",
+    "jest": "^21.1.0",
+    "mocha": "^3.5.3",
+    "react-test-renderer": "^15.6.1",
+    "regenerator-runtime": "^0.11.0"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/test"
+    ],
+    "transform": {
+      ".*": "babel-jest"
+    }
   }
 }

@@ -1,14 +1,15 @@
 'use strict'
 
-var crypto = require('crypto')
-var logger = require('../log/logger').getLogger('cryptoUtil')
+import crypto from 'crypto'
+import { getLogger } from '../log/logger'
+let logger = getLogger('orm')
 
 /**
  * generates random string of characters i.e salt
  * @function
  * @param {number} length - Length of the random string.
  */
-var genRandomString = function (length) {
+function genRandomString (length) {
     return crypto.randomBytes(Math.ceil(length / 2))
         .toString('hex') /** convert to hexadecimal format */
         .slice(0, length)   /** return required number of characters */
@@ -20,10 +21,10 @@ var genRandomString = function (length) {
  * @param {string} password - List of required fields.
  * @param {string} salt - Data to be validated.
  */
-var sha512 = function (password, salt) {
-    var hash = crypto.createHmac('sha512', salt) /** Hashing algorithm sha512 */
+function sha512  (password, salt) {
+    const hash = crypto.createHmac('sha512', salt) /** Hashing algorithm sha512 */
     hash.update(password)
-    var value = hash.digest('hex')
+    const value = hash.digest('hex')
     return {
         salt: salt,
         passwordHash: value
@@ -38,12 +39,16 @@ function saltHashPassword(userpassword) {
     console.log('nSalt = ' + passwordData.salt)
 }
 
-module.exports = {
-    generateSalt: function () {
-        return genRandomString(16)
-    },
-    hashPassword: function (userpassword, salt) {
-        var passwordData = sha512(userpassword, salt)
-        return passwordData
-    }
+function generateSalt() {
+    return genRandomString(16)
+}
+
+function hashPassword(userpassword, salt) {
+    const passwordData = sha512(userpassword, salt)
+    return passwordData
+}
+
+export  {
+    generateSalt,
+    hashPassword
 }

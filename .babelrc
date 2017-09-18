@@ -1,6 +1,12 @@
 {
-  "presets": ["es2016", "react"],
+  "presets": ["es2015", "react"],
   "plugins": [		
-		"styled-jsx/babel"
-	]
+    "styled-jsx/babel"    
+  ],
+  "env": {
+    "test": {
+      "presets": ["es2015", "react"],
+      "plugins": ["transform-runtime"]
+    }
+  }
 }
