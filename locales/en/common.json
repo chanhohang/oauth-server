@@ -1,0 +1,20 @@
+{
+  "login": "Login",
+  "home": "Home",
+  "about": "About",
+  "language": "Language",
+  "username": "User Name",
+  "password": "Password",
+  "enter" : "Enter",
+  "signIn" : "Sign in",
+  "nav": {
+    "en": "English",
+    "zh_HK": "Traditional Chinese"
+  },
+  "aboutPage": {
+    "title": "This is the about page"
+  },
+  "loginForm": {
+    "helpBlock": "must be at least {{min}} characters"
+  }
+}

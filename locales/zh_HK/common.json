@@ -1,0 +1,20 @@
+{
+    "login": "登入",
+    "home": "首頁",
+    "about": "關於我們",
+    "language" : "語言",
+    "username": "用戶名稱",
+    "password": "密碼",
+    "enter" : "輸入",
+    "signIn" : "登入",
+    "nav" : {
+      "en" : "英文",
+      "zh_HK" : "繁體中文"
+    },
+    "aboutPage" : {
+      "title" : "這是關於頁面"
+    },
+    "loginForm" : {
+      "helpBlock" : "必須至少有{{min}}個字符"
+    }
+  }

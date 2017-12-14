@@ -4,6 +4,8 @@ import React from 'react'
 import Layout from '../components/MyLayout.js'
 import fetch from 'isomorphic-unfetch'
 import Markdown from 'react-markdown'
+import { translate } from 'react-i18next'
+import i18n from '../src/app/i18n'
 
 const Post = (props) => (
   <Layout>
@@ -56,4 +58,5 @@ Post.getInitialProps = async function (context) {
   return { show }
 }
 
-export default Post
+const Extended = translate(['common'], { i18n, wait: process.browser })(Post);
+export default Extended

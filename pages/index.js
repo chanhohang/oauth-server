@@ -4,6 +4,8 @@ import React from 'react'
 import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
+import { translate } from 'react-i18next'
+import i18n from '../src/app/i18n'
 
 const PostLink = ({ show }) => (
   <li>
@@ -29,7 +31,8 @@ const PostLink = ({ show }) => (
   </li>
 )
 
-const Index = (props) => (
+var Index = (props) => (
+
   <Layout>
     <h1>Batman TV Shows</h1>
     <ul>
@@ -49,7 +52,8 @@ const Index = (props) => (
   </Layout>
 )
 
-Index.getInitialProps = async function (context) {
+const Extended = translate(['common'], { i18n, wait: process.browser })(Index);
+Extended.getInitialProps = async function (context) {
   const req = context.req
   const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
   const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
@@ -57,9 +61,16 @@ Index.getInitialProps = async function (context) {
 
   console.log(`Show data fetched. Count: ${data.length}`)
 
+  // Passing down initial translations
+  // use req.i18n instance on serverside to avoid overlapping requests set the language wrong
+  if (req && !process.browser) {
+    i18n.getInitialProps(req, ['common']);
+    console.log('i18n is initialized.')
+  }
+
   return {
     shows: data
   }
 }
 
-export default Index 
+export default Extended

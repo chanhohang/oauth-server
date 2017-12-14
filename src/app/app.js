@@ -15,7 +15,7 @@ const serverRoute = require('./core/serverRoute')
 const clientRoute = require('./core/clientRoute')
 const StringUtil = require('./util/stringUtil')
 const log4js = require('./log/logger')
-const MorganStream = require('./log/morganStream')
+// const MorganStream = require('./log/morganStream')
 
 // GUI
 const next = require('next')
@@ -23,8 +23,10 @@ const next = require('next')
 const dev = process.env.NODE_ENV !== 'production'
 // const app = next({ dir: './src/pages', dev })
 const app = next({ dev })
-
-
+//i18n
+const i18nextMiddleware = require('i18next-express-middleware');
+const Backend = require('i18next-node-fs-backend');
+const i18n = require('./i18n');
 
 const handle = app.getRequestHandler()
 
@@ -35,30 +37,47 @@ function nextjsServer() {
     return
   }
   appStarted = true;
-  app.prepare().then(() => {
-    const server = express()
 
-    // MiddleWare start
-    const upload = multer() // for parsing multipart/form-data
-    server.use(bodyParser.json()) // for parsing application/json
-    server.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-    const accessLogStream = new MorganStream()
-    server.use(morgan('combined', {stream: accessLogStream}))
-    // Middleware end
+  // Initialize i18n before start servers.
+  i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
+    preload: ['en', 'zh_HK'],
+    ns: ['common'],
+    backend: {
+      loadPath: __dirname + '/locales/{{lng}}/{{ns}}.json',
+      addPath: __dirname + 'locales/{{lng}}/{{ns}}.missing.json'
+    }
+  }, () => {
+    app.prepare().then(() => {
+      const server = express()
 
-    // Register Server Route here.
-    serverRoute(server)
+      // MiddleWare start
+      const upload = multer(); // for parsing multipart/form-data
+      server.use(bodyParser.json()); // for parsing application/json
+      server.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+      // const accessLogStream = new MorganStream()
+      // server.use(morgan('combined', { stream: accessLogStream }))
+      server.use(i18nextMiddleware.handle(i18n)) // i18n middleware
+      // Middleware end
 
-    // Register Client Route here.
-    clientRoute(server, app)
+      // i18n config
+      server.use('/locales', express.static('./locales'))
+      server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
 
-    server.get('*', (req, res) => {
-      handle(req, res)
+      // Register Server Route here.
+      serverRoute(server)
+
+      // Register Client Route here.
+      clientRoute(server, app)
+
+      server.get('*', (req, res) => {
+        handle(req, res)
+      })
+
+      let port = 3000
+      server.listen(port)
+      logger.info('Server is listening on port:' + port)
     })
 
-    let port = 3000
-    server.listen(port)
-    logger.info('Server is listening on port:' + port)
   })
 
 }
