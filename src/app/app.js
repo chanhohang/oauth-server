@@ -15,7 +15,7 @@ const serverRoute = require('./core/serverRoute')
 const clientRoute = require('./core/clientRoute')
 const StringUtil = require('./util/stringUtil')
 const log4js = require('./log/logger')
-// const MorganStream = require('./log/morganStream')
+const MorganStream = require('./log/morganStream')
 
 // GUI
 const next = require('next')
@@ -54,8 +54,8 @@ function nextjsServer() {
       const upload = multer(); // for parsing multipart/form-data
       server.use(bodyParser.json()); // for parsing application/json
       server.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-      // const accessLogStream = new MorganStream()
-      // server.use(morgan('combined', { stream: accessLogStream }))
+      const accessLogStream = new MorganStream()
+      server.use(morgan('combined', { stream: accessLogStream }))
       server.use(i18nextMiddleware.handle(i18n)) // i18n middleware
       // Middleware end
 

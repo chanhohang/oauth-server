@@ -23,7 +23,7 @@ const Header = ({ t }) => (
           <a style={linkStyle}>{t('about')}</a>
         </Link>
       </Col>
-      <Col xs={6} sm={6} md={6} lg={4} style={{ width: 200 }}>
+      <Col xs={6} sm={6} md={6} lg={4} style={{ minWidth: 200 }}>
         <span className="pull-right">
           <Link href="/login">
             <a style={linkStyle}>{t('login')}</a>
