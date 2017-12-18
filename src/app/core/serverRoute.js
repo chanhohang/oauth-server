@@ -1,6 +1,7 @@
 import express from 'express'
 import orm from '../database/rdbms/orm'
 import LoginController from './controller/LoginController'
+import RegisterController from './controller/RegisterController'
 
 export default function serverRouting(server) {
 
@@ -30,7 +31,11 @@ export default function serverRouting(server) {
         res.end()
     })
 
-    server.post('/api/login', (req, res) =>{
-        LoginController.process(req,res)
+    server.post('/api/login', (req, res) => {
+        LoginController.process(req, res)
+    })
+
+    server.post('/api/user/register', (req, res) => {
+        RegisterController.process(req, res)
     })
 }

@@ -4,16 +4,22 @@ import React from 'react'
 
 import Layout from '../components/MyLayout.js'
 
-import LoginForm from '../components/form/LoginForm'
+import UserRegisterForm from '../components/form/UserRegisterForm'
+import { translate } from 'react-i18next'
+import i18n from '../src/app/i18n'
 
 const layoutStyle = {
     'marginTop': '2em',
 }
 
-export default () => (
+const Register = () => (
     <Layout>
         <div style={layoutStyle}>
-            <LoginForm />
+            <UserRegisterForm />
         </div>
     </Layout>
 )
+
+
+const Extended = translate(['common'], { i18n, wait: process.browser })(Register);
+export default Extended

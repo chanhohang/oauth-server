@@ -5,6 +5,7 @@ import { Button, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } fr
 import fetch from 'isomorphic-fetch'
 import { translate } from 'react-i18next'
 import i18n from '../../src/app/i18n'
+import Link from 'next/link'
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -121,6 +122,9 @@ class LoginForm extends React.Component {
                         <Button onClick={this.handleSubmit} >
                             {i18n.t('signIn')}
                         </Button>
+                        <Link href="/register">
+                            <a>{i18n.t('register')}</a>
+                        </Link>
                     </Col>
                 </FormGroup>
             </Form>

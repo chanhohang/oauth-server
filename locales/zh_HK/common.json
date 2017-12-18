@@ -7,6 +7,8 @@
     "password": "密碼",
     "enter" : "輸入",
     "signIn" : "登入",
+    "submit" : "提交",
+    "email" : "電子郵件",
     "nav" : {
       "en" : "英文",
       "zh_HK" : "繁體中文"
@@ -16,5 +18,11 @@
     },
     "loginForm" : {
       "helpBlock" : "必須至少有{{min}}個字符"
+    },
+    "registerForm" : {
+      "title" : "用戶註冊表格",
+      "helpBlock" : {
+        "email" : "必須以name@company.com的形式"
+      }
     }
   }

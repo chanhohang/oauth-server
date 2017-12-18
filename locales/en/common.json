@@ -7,6 +7,8 @@
   "password": "Password",
   "enter" : "Enter",
   "signIn" : "Sign in",
+  "submit" : "Submit",
+  "email" : "Email",
   "nav": {
     "en": "English",
     "zh_HK": "Traditional Chinese"
@@ -16,5 +18,11 @@
   },
   "loginForm": {
     "helpBlock": "must be at least {{min}} characters"
+  },
+  "registerForm" : {
+    "title" : "User Registration Form",
+    "helpBlock" : {
+      "email" : "must be in the form of name@company.com"
+    }
   }
 }
