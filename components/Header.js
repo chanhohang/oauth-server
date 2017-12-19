@@ -6,14 +6,24 @@ import { translate } from 'react-i18next'
 import i18n from '../src/app/i18n'
 import Language from './dropdown/Language'
 import { SplitButton, Grid, Row, Col } from 'react-bootstrap'
+import NProgress from 'nprogress'
+import Router from 'next/router'
 
 const linkStyle = {
   marginRight: 15
 }
 
+Router.onRouteChangeStart = (url) => {
+  console.log(`Loading: ${url}`)
+  NProgress.start()
+}
+Router.onRouteChangeComplete = () => NProgress.done()
+Router.onRouteChangeError = () => NProgress.done()
+
 const Header = ({ t }) => (
   <Grid style={{ marginLeft: 0, width: 'auto', minWidth: 760 }}>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
+    <link rel='stylesheet' type='text/css' href='/static/css/nprogress.css' />
     <Row>
       <Col xs={6} sm={6} md={6} lg={8} style={{ marginTop: 8 }}>
         <Link href="/">
