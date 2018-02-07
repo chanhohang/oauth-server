@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import { Button, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
+import { ButtonToolbar, Button, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
 import fetch from 'isomorphic-fetch'
 import { translate } from 'react-i18next'
 import i18n from '../../src/app/i18n'
@@ -27,6 +27,7 @@ class LoginForm extends React.Component {
             },
             body: JSON.stringify(this.state)
         }).then(res => {
+            console.log(res)
             this.setToken(res.id_token)
             return this.fetch('api/user', {
                 method: 'GET'
@@ -119,12 +120,14 @@ class LoginForm extends React.Component {
 
                 <FormGroup>
                     <Col smOffset={2} sm={10}>
-                        <Button onClick={this.handleSubmit} >
-                            {i18n.t('signIn')}
-                        </Button>
-                        <Link href="/register">
-                            <a>{i18n.t('register')}</a>
-                        </Link>
+                        <ButtonToolbar>
+                            <Button bsStyle="primary" onClick={this.handleSubmit} >
+                                {i18n.t('signIn')}
+                            </Button>
+                            <Link href="/register">
+                                <Button bsStyle="info" onClick={this.preventDefault}> {i18n.t('register')}</Button>
+                            </Link>
+                        </ButtonToolbar>
                     </Col>
                 </FormGroup>
             </Form>

@@ -27,7 +27,10 @@ class UserRegisterForm extends React.Component {
             },
             body: JSON.stringify(this.state)
         }).then(res => {
-            return Promise.resolve(res)
+            return res.json()
+            //return Promise.resolve(res)
+        }).then(body => {
+            console.log(body)
         })
     }
 

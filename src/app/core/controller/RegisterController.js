@@ -4,6 +4,7 @@ import { getLogger } from '../../log/logger'
 let logger = getLogger('RegisterController')
 
 import Mongo from '../../database/mongodb/mongo'
+import ResponseBodyJson from '../api/response/responseBodyJson'
 
 const RegisterController = new class {
 
@@ -13,7 +14,11 @@ const RegisterController = new class {
         var password = req.body.password
         var email = req.body.email
 
-        res.end()
+        var response = new ResponseBodyJson()
+        response.resultCode=100
+        response.payload="hello world"
+        res.json(response)        
+        //res.end()
     }
 }
 

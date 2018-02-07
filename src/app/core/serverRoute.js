@@ -1,7 +1,7 @@
 import express from 'express'
 import orm from '../database/rdbms/orm'
-import LoginController from './controller/LoginController'
-import RegisterController from './controller/RegisterController'
+import LoginController from './controller/loginController'
+import RegisterController from './controller/registerController'
 
 export default function serverRouting(server) {
 
