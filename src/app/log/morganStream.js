@@ -6,7 +6,7 @@ let logger = getLogger('MorganStream')
 
 class MorganStream extends stream.Writable {
     _write(chunk, enc, next) {
-        logger.info(chunk.toString().trim())
+        // logger.info(chunk.toString().trim())
         next()
     }
 }

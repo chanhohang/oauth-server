@@ -27,6 +27,9 @@ const app = next({ dev })
 const i18nextMiddleware = require('i18next-express-middleware');
 const Backend = require('i18next-node-fs-backend');
 const i18n = require('./i18n');
+//GraphQL
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const setupGraphql = require('./core/graphql/setupGraphql');
 
 const handle = app.getRequestHandler()
 
@@ -68,6 +71,25 @@ function nextjsServer() {
 
       // Register Client Route here.
       clientRoute(server, app)
+
+      // Put together a schema
+      const myGraphQLSchema = setupGraphql();
+
+      // The GraphQL endpoint
+      server.use('/graphql', bodyParser.json(), graphqlExpress(req => {
+        return {
+          schema: myGraphQLSchema,
+          context: {
+            value: req.body.something,
+          },
+          // TODO other options here
+          // This is useful if you need to attach objects to your context on a per-request basis, 
+          // for example to initialize user data, caching tools like dataloader, or set up some API keys.
+        };
+      }));
+
+      // GraphiQL, a visual editor for queries
+      server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
       server.get('*', (req, res) => {
         handle(req, res)
