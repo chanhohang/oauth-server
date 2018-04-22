@@ -22,7 +22,7 @@ Router.onRouteChangeError = () => NProgress.done()
 
 const Header = ({ t }) => (
   <Grid style={{ marginLeft: 0, width: 'auto', minWidth: 760 }}>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossOrigin="anonymous"/>
     <link rel='stylesheet' type='text/css' href='/static/css/nprogress.css' />
     <Row>
       <Col xs={6} sm={6} md={6} lg={8} style={{ marginTop: 8 }}>
