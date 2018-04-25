@@ -22,9 +22,9 @@ const RegisterController = new class {
         //res.end()
     }
 
-    addUser(userId, firstName, lastName, password, email) {
+    async addUser(userId, firstName, lastName, password, email) {
         let UserModel = Mongo.getUserModel()
-        var user = UserModel.find({userId: userId}).exec();
+        var user = await UserModel.findOne({userId: userId}).exec();
         if (user != null)
         {
             logger.error('User already existed.' + user)
@@ -39,14 +39,7 @@ const RegisterController = new class {
             password_salt: "salt",
             email: email
           };
-        UserModel.findOneAndUpdate({ userId: user.userId },
-            user,
-            { upsert: true, setDefaultsOnInsert: true, new: true },
-            (err, user) => {
-              if (err) logger.error(err);
-              logger.info(user._id + " is saved." + user);
-            }
-          );
+        await UserModel.create(user);
         return user;
     }
 

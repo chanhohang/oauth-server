@@ -37,7 +37,7 @@ const resolvers = {
       return newBook;
     },
     addUser: (root, args) => {
-      RegisterController.addUser(
+      return RegisterController.addUser(
         args.userId,
         args.firstName,
         args.lastName,

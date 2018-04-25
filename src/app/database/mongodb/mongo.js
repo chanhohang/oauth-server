@@ -24,7 +24,7 @@ class Mongo {
     connect(callback) {
         logger.info('Start connect:' + url)
 
-        mongoose.connect(url, { useMongoClient: true });
+        mongoose.connect(url, { });
 
         //Get the default connection
         this.db = mongoose.connection;
