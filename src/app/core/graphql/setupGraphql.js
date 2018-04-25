@@ -1,41 +1,51 @@
-'use strict';
+const {makeExecutableSchema} = require("graphql-tools");
+const fs = require("fs");
+const path = require("path");
+const logger = require("../../log/logger").getLogger("setupGraphql");
 
-import { makeExecutableSchema } from 'graphql-tools';
-
-import { getLogger } from '../../log/logger'
-let logger = getLogger('RegisterController')
+let RegisterController = require("../controller/RegisterController");
+let UserController = require("../controller/UserController");
 
 // Some fake data
 const books = [
-    {
-        title: "Harry Potter and the Sorcerer's stone",
-        author: 'J.K. Rowling',
-    },
-    {
-        title: 'Jurassic Park',
-        author: 'Michael Crichton',
-    },
+  {
+    title: "Harry Potter and the Sorcerer's stone",
+    author: "J.K. Rowling"
+  },
+  {
+    title: "Jurassic Park",
+    author: "Michael Crichton"
+  }
 ];
 
-// The GraphQL schema in string form
-const typeDefs = `
-    type Query { books: [Book] }
-    type Book { title: String, author: String }
-    type Mutation {
-        addBook( title: String, author: String ) : Book
-    }
-  `;
+const typeDefs = [
+  fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf8")
+];
 
 // The resolvers
 const resolvers = {
-    Query: { books: () => books },
-    Mutation: {
-        addBook: (root, args) => {
-            const newBook = { title: args.title, author: args.author };
-            books.push(newBook);
-            return newBook;
-        },
+  Query: {
+    books: () => books,
+    users: () => {
+      return UserController.findAllUsers();
+    }
+  },
+  Mutation: {
+    addBook: (root, args) => {
+      const newBook = { title: args.title, author: args.author };
+      books.push(newBook);
+      return newBook;
     },
+    addUser: (root, args) => {
+      RegisterController.addUser(
+        args.userId,
+        args.firstName,
+        args.lastName,
+        args.password,
+        args.email
+      );
+    }
+  }
 };
 
 /**
@@ -46,9 +56,9 @@ addBook(title:"first",author:"second") {
 }
 }
  */
-export default function setupGraphql() {
-    return makeExecutableSchema({
-        typeDefs,
-        resolvers,
-    });
+export default function setup() {
+  return makeExecutableSchema({
+    typeDefs,
+    resolvers
+  });
 }
